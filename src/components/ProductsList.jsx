@@ -1,0 +1,96 @@
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import '../styles/ProductsList.css';
+
+Modal.setAppElement('#root');
+
+const ProductsList = () => {
+  const [products, setProducts] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [user_id] = useState(localStorage.getItem('user_id'));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/list');
+        const result = await response.json();
+        console.log(result); // Imprime toda la respuesta para ver los productos
+        if (result.status === 'Success') {
+          setProducts(result.data);
+        } else {
+          console.error('Error al obtener productos:', result.message);
+        }
+      } catch (error) {
+        console.error('Error al obtener productos:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const addToCart = async (product) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/car', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          producto_id: product._id,
+          fecha_hora: new Date().toISOString(),
+        }),
+      });
+
+      const result = await response.json();
+      if (result.status === 'Success') {
+        setModalContent(`${product.nombre} ha sido agregado al carrito.`);
+      } else {
+        console.error('Error al agregar producto al carrito:', result.message);
+        setModalContent('Error al agregar producto al carrito.');
+      }
+    } catch (error) {
+      console.error('Error al agregar producto al carrito:', error);
+      setModalContent('Error al agregar producto al carrito.');
+    } finally {
+      setModalIsOpen(true);
+    }
+  };
+
+  const goToCart = () => {
+    navigate('/car'); // Redirigir a la ruta /cart (carrito)
+  };
+
+  return (
+    <section className="productos-lista">
+      <h2>Productos Disponibles</h2>
+      <div className="productos-grid">
+        {products.map(product => (
+          <div className="producto" key={product._id}>
+            <img src={`http://localhost:5000/images/${product.image}`} alt={product.nombre} className="producto-imagen" />
+            <h3 className="producto-nombre">{product.nombre}</h3>
+            <p className="producto-precio">Precio: ${product.precio}</p>
+            <p className="producto-descripcion">{product.description}</p>
+            <button className="add-to-cart-btn" onClick={() => addToCart(product)}>Agregar al carrito</button>
+          </div>
+        ))}
+      </div>
+      <button onClick={goToCart} className="go-to-cart-btn">Ir al carrito</button> {/* Botón para ir al carrito */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Producto agregado"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>{modalContent}</h2>
+        <button onClick={() => setModalIsOpen(false)}>Cerrar</button>
+      </Modal>
+    </section>
+  );
+};
+
+export default ProductsList;

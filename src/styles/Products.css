@@ -1,0 +1,48 @@
+/* Products.css */
+
+.productos {
+  padding: 20px;
+  text-align: center;
+}
+
+.productos h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.productos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.producto {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 200px;
+  text-align: center;
+  transition: box-shadow 0.3s;
+}
+
+.producto img {
+  max-width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.producto h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.producto p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.producto:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
