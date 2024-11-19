@@ -44,19 +44,19 @@ const Cart = () => {
   return (
     <section className="carrito">
       <h2>Tu Carrito</h2>
-      <div className="carrito-items">
+      <div className="cart-items">
         {cartItems.map(item => (
-          <div className="carrito-item" key={item._id}>
-            <img src={`http://localhost:5000/images/${item.image}`} alt={item.nombre} className="carrito-imagen" />
-            <h3 className="carrito-nombre">{item.nombre}</h3>
-            <p className="carrito-precio">Precio: ${item.precio}</p>
-            <p className="carrito-descripcion">{item.description}</p>
-            <p className="carrito-cantidad">Cantidad: {item.quantity}</p>
-            <button className="remove-from-cart-btn" onClick={() => removeItem(item._id)}>Eliminar</button>
+          <div className="cart-item" key={item._id}>
+            <img src={`http://localhost:5000/images/${item.image}`} alt={item.nombre} className="cart-item-image" />
+            <h3 className="cart-item-name">{item.nombre}</h3>
+            <p className="cart-item-price">Precio unitario: ${item.precio}</p>
+            <p className="cart-item-quantity">Cantidad: {item.cantidad}</p>
+            <p className="cart-item-total">Total: ${item.total}</p>
+            <button className="remove-btn" onClick={() => removeItem(item._id)}>Eliminar</button>
           </div>
         ))}
       </div>
-      <button onClick={() => navigate('/list')} className="go-to-home-btn">Volver a la tienda</button> {/* Botón para regresar a la tienda */}
+      <button onClick={() => navigate('/list')} className="checkout-btn">Volver a la tienda</button> {/* Botón para regresar a la tienda */}
     </section>
   );
 };

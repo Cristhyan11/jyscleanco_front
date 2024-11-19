@@ -1,74 +1,75 @@
-//vista_ganadores.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/vista_ganadores.css';
+import '../styles/AgregarProducto.css';
 
-function VistaGanadores() {
-  const [ganadores, setGanadores] = useState([]);
+function AgregarProducto() {
+  const [nombre, setNombre] = useState('');
+  const [precio, setPrecio] = useState('');
+  const [cant, setCant] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [imagen, setImagen] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userRole = localStorage.getItem('role');
-    console.log("Rol del usuario:", userRole);
-    if (userRole?.toLowerCase() !== 'admin') {
-      navigate('/');
-    }
+  const handleFileChange = (event) => {
+    setImagen(event.target.files[0]);
+  };
 
-    // Obtener ganadores de la base de datos al cargar el componente
-    const fetchGanadores = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/ganadores');
-        const data = await response.json();
-        setGanadores(data);
-      } catch (error) {
-        console.error('Error al obtener ganadores:', error);
-      }
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    fetchGanadores();
-  }, [navigate]);
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('precio', precio);
+    formData.append('cant', cant);
+    formData.append('description', descripcion);
+    formData.append('image', imagen);
+    formData.append('Fecha_agregado', new Date().toISOString());
 
-  const handleLogout = () => {
     try {
-      localStorage.removeItem('role');
-      localStorage.removeItem('user_id');
-      navigate('/');
+      const response = await fetch('http://localhost:5000/api/add', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log('Producto agregado exitosamente');
+        navigate('/list');
+      } else {
+        console.error('Error al agregar el producto');
+      }
     } catch (error) {
-      console.error("Error al acceder a localStorage:", error);
+      console.error('Error al agregar el producto:', error);
     }
   };
-  
 
   return (
-    <div className="ganadores-container">
-      <h2 className="ganadores-title">Lista de Ganadores</h2>
-      <table className="ganadores-table">
-        <thead>
-          <tr>
-            <th>Fecha y Hora</th>
-            <th>Nombre</th>
-            <th>Cedula</th>
-            <th>Celular</th>
-            <th>Código</th>
-            <th>Premio</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ganadores.map((ganador) => (
-            <tr key={ganador.id}>
-              <td>{new Date(ganador.fecha_hora).toLocaleString('es-CO', { timeZone: 'America/Bogota' })}</td>
-              <td>{ganador.nombre}</td>
-              <td>{ganador.cedula}</td>
-              <td>{ganador.celular}</td>
-              <td>{ganador.numero_registrado}</td>
-              <td>{ganador.premio}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button className='.logout-button' onClick={handleLogout}>Cerrar Sesión</button>
+    <div className="agregar-producto">
+      <h2>Agregar Nuevo Producto</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nombre:
+          <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+        </label>
+        <label>
+          Precio:
+          <input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)} required />
+        </label>
+        <label>
+          Cantidad:
+          <input type="number" value={cant} onChange={(e) => setCant(e.target.value)} required />
+        </label>
+        <label>
+          Descripción:
+          <textarea value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required></textarea>
+        </label>
+        <label>
+          Imagen:
+          <input type="file" onChange={handleFileChange} required />
+        </label>
+        <button type="submit">Agregar Producto</button>
+      </form>
     </div>
   );
 }
 
-export default VistaGanadores;
+export default AgregarProducto;

@@ -9,6 +9,8 @@ const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const [user_id] = useState(localStorage.getItem('user_id'));
   const navigate = useNavigate();
 
@@ -17,7 +19,6 @@ const ProductsList = () => {
       try {
         const response = await fetch('http://localhost:5000/api/list');
         const result = await response.json();
-        console.log(result); // Imprime toda la respuesta para ver los productos
         if (result.status === 'Success') {
           setProducts(result.data);
         } else {
@@ -31,23 +32,30 @@ const ProductsList = () => {
     fetchProducts();
   }, []);
 
-  const addToCart = async (product) => {
+  const handleAddToCart = (product) => {
+    setSelectedProduct(product);
+    setModalIsOpen(true);
+  };
+
+  const addToCart = async () => {
+    if (!selectedProduct) return;
     try {
-      const response = await fetch('http://localhost:5000/api/car', {
+      const response = await fetch('http://localhost:5000/api/list', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           user_id: user_id,
-          producto_id: product._id,
+          producto_id: selectedProduct._id,
+          cantidad: quantity,
           fecha_hora: new Date().toISOString(),
         }),
       });
 
       const result = await response.json();
       if (result.status === 'Success') {
-        setModalContent(`${product.nombre} ha sido agregado al carrito.`);
+        setModalContent(`${selectedProduct.nombre} ha sido agregado al carrito.`);
       } else {
         console.error('Error al agregar producto al carrito:', result.message);
         setModalContent('Error al agregar producto al carrito.');
@@ -56,7 +64,8 @@ const ProductsList = () => {
       console.error('Error al agregar producto al carrito:', error);
       setModalContent('Error al agregar producto al carrito.');
     } finally {
-      setModalIsOpen(true);
+      setModalIsOpen(false);
+      setQuantity(1); // Reset quantity
     }
   };
 
@@ -74,7 +83,7 @@ const ProductsList = () => {
             <h3 className="producto-nombre">{product.nombre}</h3>
             <p className="producto-precio">Precio: ${product.precio}</p>
             <p className="producto-descripcion">{product.description}</p>
-            <button className="add-to-cart-btn" onClick={() => addToCart(product)}>Agregar al carrito</button>
+            <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
           </div>
         ))}
       </div>
@@ -82,12 +91,27 @@ const ProductsList = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Producto agregado"
+        contentLabel="Seleccione cantidad"
         className="modal"
         overlayClassName="overlay"
       >
-        <h2>{modalContent}</h2>
-        <button onClick={() => setModalIsOpen(false)}>Cerrar</button>
+        {selectedProduct && (
+          <div>
+            <h2>{`Agregar ${selectedProduct.nombre} al carrito`}</h2>
+            <label>
+              Cantidad:
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+                min="1"
+              />
+            </label>
+            <button onClick={addToCart}>Agregar</button>
+            <button onClick={() => setModalIsOpen(false)}>Cancelar</button>
+          </div>
+        )}
+        {modalContent && <h2>{modalContent}</h2>}
       </Modal>
     </section>
   );
