@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Header from './Header';
-import Footer from './Footer';
 
 Modal.setAppElement('#root');
 
@@ -25,7 +24,7 @@ function Login({ onLoginSuccess }) {
     e.preventDefault();
     console.log('Form submitted:', { email, password });
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch('https://jyscleanco-back.vercel.app/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

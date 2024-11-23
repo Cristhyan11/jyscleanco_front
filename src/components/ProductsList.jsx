@@ -18,7 +18,7 @@ const ProductsList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/list');
+        const response = await fetch('https://jyscleanco-back.vercel.app/api/list');
         const result = await response.json();
         if (result.status === 'Success') {
           setProducts(result.data);
@@ -50,7 +50,7 @@ const ProductsList = () => {
   const addToCart = async () => {
     if (!selectedProduct) return;
     try {
-      const response = await fetch('http://localhost:5000/api/list', {
+      const response = await fetch('https://jyscleanco-back.vercel.app/api/list', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
