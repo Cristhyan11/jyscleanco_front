@@ -1,42 +1,40 @@
-/* Footer.css */
+.footer {
+  background-color: #fce400; /* Fondo amarillo */
+  padding: 20px 0; /* Espaciado superior e inferior */
+  display: flex;
+  justify-content: space-between; /* Espaciado entre texto e íconos */
+  align-items: center;
+  color: black; /* Color del texto */
+  font-family: 'Bebas Neue', sans-serif; /* Fuente genérica */
+  font-size: 14px; /* Tamaño del texto */
+}
 
-.bottom {
-    background-color: #2c3e50;
-    padding: 20px 0;
-    text-align: center;
-    color: white;
-  }
-  
-  .social ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .social ul li {
-    display: inline;
-    margin: 0 10px;
-  }
-  
-  .social ul li a {
-    color: white;
-    font-size: 20px;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .social ul li a:hover {
-    color: #3498db;
-  }
-  
-  p {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #bdc3c7;
-    transition: color 0.3s;
-  }
-  
-  p:hover {
-    color: #3498db;
-  }
-  
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; /* Centrado horizontal */
+  display: flex;
+  justify-content: space-between; /* Espaciado entre texto e íconos */
+  align-items: center;
+}
+
+.footer-content p {
+  margin: 0; /* Sin márgenes */
+  font-weight: bold; /* Negrita */
+}
+
+.social {
+  display: flex;
+  gap: 15px; /* Espaciado entre los íconos */
+}
+
+.social a {
+  color: black; /* Color inicial de los íconos */
+  font-size: 15px; /* Tamaño de los íconos */
+  transition: transform 0.2s ease, color 0.3s ease; /* Efecto al pasar el mouse */
+}
+
+.social a:hover {
+  color: #e57300; /* Cambia a naranja en hover */
+  transform: scale(1.2); /* Efecto de agrandar */
+}

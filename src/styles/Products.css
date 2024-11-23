@@ -1,5 +1,3 @@
-/* Products.css */
-
 .productos {
   padding: 20px;
   text-align: center;
@@ -7,7 +5,9 @@
 
 .productos h2 {
   font-size: 2rem;
+  font-family: 'Bebas Neue', sans-serif;
   margin-bottom: 20px;
+  color: #FFC300; /* Cambia el color del título principal */
 }
 
 .productos-grid {
@@ -35,7 +35,9 @@
 
 .producto h3 {
   font-size: 1.2rem;
+  font-family: 'Bebas Neue', sans-serif;
   margin-bottom: 10px;
+  color: #FFC300; /* Cambia el color de los títulos de los productos */
 }
 
 .producto p {

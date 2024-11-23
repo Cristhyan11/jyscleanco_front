@@ -1,83 +1,89 @@
-/* Header.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 .header-section {
-  background-color: #2c3e50;
-  color: #ffffff;
-  padding: 20px 0;
+  background-color: #1a1a1a; /* Fondo oscuro */
+  padding: 10px 30px;
+  color: #FFC300; /* Color amarillo del texto */
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  font-family: 'Bebas Neue', sans-serif;
 }
 
-.center {
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .logo-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .logo {
-  max-width: 150px;
+  max-width: 200px; /* Tamaño del logo */
   height: auto;
 }
 
-.company-name {
-  font-size: 1.5em;
-  margin-top: 10px;
+.slogan {
+  font-size: 0.9rem;
+  color: white;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.icon-container {
+.nav-menu {
   display: flex;
+  gap: 15px; 
   justify-content: center;
-  margin: 10px 0;
+  align-items: center;
 }
 
-.icon-button {
-  background: none;
-  border: none;
-  color: #ffffff;
-  margin: 0 10px;
-  font-size: 1.5em;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.icon-button:hover {
-  color: #f39c12;
-}
-
-.search-container {
+.nav-link {
   display: flex;
   align-items: center;
-  margin-top: 20px;
-}
-
-.search {
-  padding: 10px;
-  font-size: 1em;
+  gap: 8px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #f4f4f4;
   border: none;
-  border-radius: 5px;
-}
-
-.search-btn {
-  background-color: #f39c12;
-  border: none;
-  color: #ffffff;
-  padding: 10px 15px;
+  color: #FFC300;
   cursor: pointer;
+  position: relative;
+  padding: 10px 20px;
+  transition: color 0.3s;
   border-radius: 5px;
-  margin-left: 5px;
-  transition: background-color 0.3s;
+  transition: background 0.3s, color 0.3s;
 }
 
-.search-btn:hover {
-  background-color: #e67e22;
+.nav-link i {
+  font-size: 18px;
 }
+
+.nav-link:hover {
+  background: #ddd;
+  color: #333;
+}
+
+.nav-link::after {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 0;
+  background: #FFC300;
+  margin: 5px auto 0 auto;
+  transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+

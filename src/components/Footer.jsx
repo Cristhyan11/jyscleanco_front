@@ -1,18 +1,33 @@
 import React from 'react';
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
 import '../styles/Footer.css';
 
 const Footer = () => {
   return (
-    <div className="bottom">
-      <div className="social">
-        <ul>
-          <li><a href="https://facebook.com" title="Facebook"><i className="fa fa-facebook-official" aria-hidden="true"></i></a></li>
-          <li><a href="https://twitter.com" title="Twitter"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
-          <li><a href="https://instagram.com" title="Instagram"><i className="fa fa-instagram" aria-hidden="true"></i></a></li>
-        </ul>
+    <footer className="footer">
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet"
+      />
+
+      <div className="footer-content">
+        <p>© 2024. All rights reserved.</p>
+        <div className="social">
+          <a href="https://wa.me/123456789" title="WhatsApp" target="_blank" rel="noopener noreferrer">
+            <i className="fa fa-whatsapp"></i>
+          </a>
+          <a href="https://facebook.com" title="Facebook" target="_blank" rel="noopener noreferrer">
+            <i className="fa fa-facebook"></i>
+          </a>
+          <a href="https://instagram.com" title="Instagram" target="_blank" rel="noopener noreferrer">
+            <i className="fa fa-instagram"></i>
+          </a>
+          <a href="https://twitter.com" title="Twitter" target="_blank" rel="noopener noreferrer">
+            <i className="fa fa-twitter"></i>
+          </a>
+        </div>
       </div>
-      <a href="javascript:void(0);" title="Newsletter"><p>¿Conoces nuestra newsletter?</p></a>
-    </div>
+    </footer>
   );
 };
 

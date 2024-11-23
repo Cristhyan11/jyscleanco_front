@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ProductsList.css';
+import Header from './Header'; // Importa el componente Header
 
 Modal.setAppElement('#root');
 
@@ -33,8 +34,17 @@ const ProductsList = () => {
   }, []);
 
   const handleAddToCart = (product) => {
-    setSelectedProduct(product);
-    setModalIsOpen(true);
+    if (!user_id) {
+      // Mostrar modal de "Necesitas iniciar sesión"
+      setModalContent('Necesitas iniciar sesión');
+      setModalIsOpen(true);
+      setTimeout(() => {
+        navigate('/login'); // Redirigir a la página de login después de 2 segundos
+      }, 2000);
+    } else {
+      setSelectedProduct(product);
+      setModalIsOpen(true);
+    }
   };
 
   const addToCart = async () => {
@@ -74,46 +84,49 @@ const ProductsList = () => {
   };
 
   return (
-    <section className="productos-lista">
-      <h2>Productos Disponibles</h2>
-      <div className="productos-grid">
-        {products.map(product => (
-          <div className="producto" key={product._id}>
-            <img src={`http://localhost:5000/images/${product.image}`} alt={product.nombre} className="producto-imagen" />
-            <h3 className="producto-nombre">{product.nombre}</h3>
-            <p className="producto-precio">Precio: ${product.precio}</p>
-            <p className="producto-descripcion">{product.description}</p>
-            <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
-          </div>
-        ))}
-      </div>
-      <button onClick={goToCart} className="go-to-cart-btn">Ir al carrito</button> {/* Botón para ir al carrito */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Seleccione cantidad"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        {selectedProduct && (
-          <div>
-            <h2>{`Agregar ${selectedProduct.nombre} al carrito`}</h2>
-            <label>
-              Cantidad:
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                min="1"
-              />
-            </label>
-            <button onClick={addToCart}>Agregar</button>
-            <button onClick={() => setModalIsOpen(false)}>Cancelar</button>
-          </div>
-        )}
-        {modalContent && <h2>{modalContent}</h2>}
-      </Modal>
-    </section>
+    <>
+      <Header /> 
+      <section className="productos-lista">
+        <h2>Productos Disponibles</h2>
+        <div className="productos-grid">
+          {products.map(product => (
+            <div className="producto" key={product._id}>
+              <img src={`http://localhost:5000/images/${product.image}`} alt={product.nombre} className="producto-imagen" />
+              <h3 className="producto-nombre">{product.nombre}</h3>
+              <p className="producto-precio">Precio: ${product.precio}</p>
+              <p className="producto-descripcion">{product.description}</p>
+              <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>Agregar al carrito</button>
+            </div>
+          ))}
+        </div>
+        <button onClick={goToCart} className="go-to-cart-btn">Ir al carrito</button> {/* Botón para ir al carrito */}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          contentLabel="Seleccione cantidad"
+          className="modal"
+          overlayClassName="overlay"
+        >
+          {selectedProduct && (
+            <div>
+              <h2>{`Agregar ${selectedProduct.nombre} al carrito`}</h2>
+              <label>
+                Cantidad:
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(Number(e.target.value))}
+                  min="1"
+                />
+              </label>
+              <button onClick={addToCart}>Agregar</button>
+              <button onClick={() => setModalIsOpen(false)}>Cancelar</button>
+            </div>
+          )}
+          {modalContent && <h2>{modalContent}</h2>}
+        </Modal>
+      </section>
+    </>
   );
 };
 
