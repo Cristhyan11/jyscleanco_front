@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/carrito.css';
+import '../styles/Carrito.css';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
