@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import '../styles/registro.css';
@@ -18,130 +18,81 @@ function Registro() {
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
+  // Cargar el script de reCAPTCHA al renderizar el componente
+  useEffect(() => {
+    const loadRecaptcha = () => {
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    };
+
+    loadRecaptcha();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', { nombre, fechaNacimiento, cedula, celular, email, ciudad, password, confirmPassword });
 
- // Validar nombre solo con letras
-    const nombreRegex = /^[A-Za-z\s]+$/;
-    if (!nombreRegex.test(nombre)) {
-      setModalMessage('El nombre solo puede contener letras.');
+    // Obtener el token de reCAPTCHA
+    const token = grecaptcha.getResponse();
+    if (!token) {
+      setModalMessage('Por favor, completa el reCAPTCHA.');
       return;
     }
 
-    // Validar fecha de nacimiento para mayores de 18 años
-    const currentDate = new Date();
-    const birthDate = new Date(fechaNacimiento);
-    let age = currentDate.getFullYear() - birthDate.getFullYear();
-    const monthDifference = currentDate.getMonth() - birthDate.getMonth();
-    if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())) {
-      age--;
-    }
-    if (age < 18) {
-      setModalMessage('Debes tener al menos 18 años para registrarte.');
-      return;
-    }
-
-    if (!email.includes('@')) {
-      setModalMessage('El correo electrónico debe contener un @.');
-      return;
-    }
-
-    if (password.length < 7 || /[^A-Za-z0-9]/.test(password)) {
-      setModalMessage('La contraseña debe tener al menos 7 caracteres y no debe contener caracteres especiales.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setModalMessage('Las contraseñas no coinciden');
-      return;
-    }
+    // Datos del formulario
+    const data = {
+      token, // Enviar el token al backend
+      nombre,
+      fechaNacimiento,
+      cedula,
+      celular,
+      email,
+      apartamento,
+      ciudad,
+      password,
+    };
 
     try {
-      const response = await fetch('https://jyscleanco-back.vercel.app/api/register', {
+      const response = await fetch('http://localhost:3000/api/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ nombre, fechaNacimiento, cedula, celular, email, ciudad, apartamento, password })
+        body: JSON.stringify(data),
       });
+
       const result = await response.json();
-      if (result.status === "UsuarioRegistrado") {
-        console.log(`User: ${result.user}, Role: ${result.role}`);
-        localStorage.setItem('user', result.user);
-        localStorage.setItem('role', result.role);
+      if (result.status === 'UsuarioRegistrado') {
         setModalMessage('Su registro es un éxito.');
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000); // Redirect after 2 seconds
+        setTimeout(() => navigate('/login'), 2000); // Redirigir después de 2 segundos
       } else {
         setModalMessage(result.message);
       }
     } catch (error) {
       console.error('Error:', error);
-      setModalMessage('Error en el registro');
+      setModalMessage('Error en el registro.');
     }
   };
-
-  const handleCelularChange = (e) => {
-    let value = e.target.value;
-    value = value.replace(/\D/g, ''); // Remove non-numeric characters
-    if (value.length > 3) {
-      value = `${value.slice(0, 3)}-${value.slice(3)}`;
-    }
-    setCelular(value);
-  };
-
-  const closeModal = () => {
-    setModalMessage('');
-  };
-
-  const ciudadesPorApartamento =
-  {
-    'Amazonas': ['Leticia', 'Puerto Nariño'],
-    'Antioquia': ['Medellín', 'Bello', 'Itagüí', 'Envigado', 'Rionegro'],
-    'Arauca': ['Arauca', 'Tame', 'Saravena', 'Arauquita'],
-    'Atlántico': ['Barranquilla', 'Soledad', 'Malambo', 'Puerto Colombia'],
-    'Bolívar': ['Cartagena', 'Magangué', 'Turbaco', 'Arjona'],
-    'Boyacá': ['Tunja', 'Duitama', 'Sogamoso', 'Chiquinquirá'],
-    'Caldas': ['Manizales', 'Villamaría', 'Chinchiná', 'La Dorada'],
-    'Caquetá': ['Florencia', 'San Vicente del Caguán', 'Cartagena del Chairá'],
-    'Casanare': ['Yopal', 'Aguazul', 'Villanueva', 'Tauramena'],
-    'Cauca': ['Popayán', 'Santander de Quilichao', 'Puerto Tejada'],
-    'Cesar': ['Valledupar', 'Aguachica', 'La Jagua de Ibirico'],
-    'Chocó': ['Quibdó', 'Istmina', 'Tadó'],
-    'Córdoba': ['Montería', 'Cereté', 'Lorica', 'Sahagún'],
-    'Cundinamarca': ['Bogotá', 'Soacha', 'Fusagasugá', 'Zipaquirá'],
-    'Guainía': ['Inírida'],
-    'Guaviare': ['San José del Guaviare'],
-    'Huila': ['Neiva', 'Pitalito', 'Garzón'],
-    'La Guajira': ['Riohacha', 'Maicao', 'Uribia'],
-    'Magdalena': ['Santa Marta', 'Ciénaga', 'Fundación'],
-    'Meta': ['Villavicencio', 'Granada', 'Acacías'],
-    'Nariño': ['Pasto', 'Tumaco', 'Ipiales'],
-    'Norte de Santander': ['Cúcuta', 'Ocaña', 'Pamplona'],
-    'Putumayo': ['Mocoa', 'Puerto Asís', 'Orito'],
-    'Quindío': ['Armenia', 'Calarcá', 'Montenegro'],
-    'Risaralda': ['Pereira', 'Dosquebradas', 'Santa Rosa de Cabal'],
-    'San Andrés y Providencia': ['San Andrés', 'Providencia'],
-    'Santander': ['Bucaramanga', 'Floridablanca', 'Girón', 'Piedecuesta'],
-    'Sucre': ['Sincelejo', 'Corozal', 'San Marcos'],
-    'Tolima': ['Ibagué', 'Espinal', 'Melgar'],
-    'Valle del Cauca': ['Cali', 'Buenaventura', 'Palmira', 'Tuluá'],
-    'Vaupés': ['Mitú'],
-    'Vichada': ['Puerto Carreño', 'La Primavera']
-}
-
 
   const handleApartamentoChange = (e) => {
     setApartamento(e.target.value);
     setCiudad('');
   };
 
+  const ciudadesPorApartamento = {
+    Amazonas: ['Leticia', 'Puerto Nariño'],
+    Antioquia: ['Medellín', 'Envigado', 'Itagüí'],
+    Cundinamarca: ['Bogotá', 'Soacha', 'Chía'],
+    ValleDelCauca: ['Cali', 'Palmira', 'Tuluá'],
+  };
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="ai-agent-form">
         <h2 className="form-title">Digita Tus Datos y Gana</h2>
+
         <div className="form-group">
           <label htmlFor="nombre">Nombre y apellido</label>
           <input
@@ -153,17 +104,7 @@ function Registro() {
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
-          <input
-            type="date"
-            id="fechaNacimiento"
-            name="fechaNacimiento"
-            value={fechaNacimiento}
-            onChange={(e) => setFechaNacimiento(e.target.value)}
-            required
-          />
-        </div>
+
         <div className="form-group">
           <label htmlFor="cedula">Cédula</label>
           <input
@@ -176,6 +117,19 @@ function Registro() {
             required
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="fechaNacimiento">Fecha de nacimiento</label>
+          <input
+            type="date"
+            id="fechaNacimiento"
+            name="fechaNacimiento"
+            value={fechaNacimiento}
+            onChange={(e) => setFechaNacimiento(e.target.value)}
+            required
+          />
+        </div>
+
         <div className="form-group">
           <label htmlFor="celular">Celular</label>
           <input
@@ -183,11 +137,12 @@ function Registro() {
             id="celular"
             name="celular"
             value={celular}
-            onChange={handleCelularChange}
-            pattern="\d{3}-?\d{7}" // Cambiado para aceptar guion opcional
+            onChange={(e) => setCelular(e.target.value)}
+            pattern="\d{3}-?\d{7}"
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -199,6 +154,7 @@ function Registro() {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="apartamento">Apartamento</label>
           <select
@@ -209,41 +165,13 @@ function Registro() {
             required
           >
             <option value="">Seleccione</option>
-            <option value="">Seleccione</option>
             <option value="Amazonas">Amazonas</option>
             <option value="Antioquia">Antioquia</option>
-            <option value="Arauca">Arauca</option>
-            <option value="Atlántico">Atlántico</option>
-            <option value="Bolívar">Bolívar</option>
-            <option value="Boyacá">Boyacá</option>
-            <option value="Caldas">Caldas</option>
-            <option value="Caquetá">Caquetá</option>
-            <option value="Casanare">Casanare</option>
-            <option value="Cauca">Cauca</option>
-            <option value="Cesar">Cesar</option>
-            <option value="Chocó">Chocó</option>
-            <option value="Córdoba">Córdoba</option>
             <option value="Cundinamarca">Cundinamarca</option>
-            <option value="Guainía">Guainía</option>
-            <option value="Guaviare">Guaviare</option>
-            <option value="Huila">Huila</option>
-            <option value="La Guajira">La Guajira</option>
-            <option value="Magdalena">Magdalena</option>
-            <option value="Meta">Meta</option>
-            <option value="Nariño">Nariño</option>
-            <option value="Norte de Santander">Norte de Santander</option>
-            <option value="Putumayo">Putumayo</option>
-            <option value="Quindío">Quindío</option>
-            <option value="Risaralda">Risaralda</option>
-            <option value="San Andrés y Providencia">San Andrés y Providencia</option>
-            <option value="Santander">Santander</option>
-            <option value="Sucre">Sucre</option>
-            <option value="Tolima">Tolima</option>
-            <option value="Valle del Cauca">Valle del Cauca</option>
-            <option value="Vaupés">Vaupés</option>
-            <option value="Vichada">Vichada</option>
+            <option value="ValleDelCauca">Valle del Cauca</option>
           </select>
         </div>
+
         <div className="form-group">
           <label htmlFor="ciudad">Ciudad</label>
           <select
@@ -254,11 +182,15 @@ function Registro() {
             required
           >
             <option value="">Seleccione</option>
-            {ciudadesPorApartamento[apartamento] && ciudadesPorApartamento[apartamento].map((city, index) => (
-              <option key={index} value={city}>{city}</option>
-            ))}
+            {ciudadesPorApartamento[apartamento] &&
+              ciudadesPorApartamento[apartamento].map((city, index) => (
+                <option key={index} value={city}>
+                  {city}
+                </option>
+              ))}
           </select>
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Contraseña</label>
           <input
@@ -270,8 +202,9 @@ function Registro() {
             required
           />
         </div>
+
         <div className="form-group">
-          <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+          <label htmlFor="confirmPassword">Confirmar contraseña</label>
           <input
             type="password"
             id="confirmPassword"
@@ -281,13 +214,23 @@ function Registro() {
             required
           />
         </div>
-        <button type="submit" className="submit-button">Registrarse</button>
-        <label htmlFor="">                     </label>
-        <button type="button" className="submit-button" onClick={() => navigate('/home')}>Home</button>
+
+        <div className="form-group">
+          <label htmlFor="recaptcha">Verificación</label>
+          <div
+            className="g-recaptcha"
+            data-sitekey="6LdV0v4qAAAAAJQDgJRcnN1bWzpHvgqpXXEK9Q3B" // Usa tu clave del sitio
+          ></div>
+        </div>
+
+        <button type="submit" className="submit-button">
+          Registrarse
+        </button>
       </form>
+
       <Modal
         isOpen={!!modalMessage}
-        onRequestClose={closeModal}
+        onRequestClose={() => setModalMessage('')}
         contentLabel="Message Modal"
         className="modal1"
         overlayClassName="overlay"
@@ -295,7 +238,9 @@ function Registro() {
         <div className="modal-content">
           <h2>Mensaje</h2>
           <p>{modalMessage}</p>
-          <button onClick={closeModal} className="submit-button">Cerrar</button>
+          <button onClick={() => setModalMessage('')} className="submit-button">
+            Cerrar
+          </button>
         </div>
       </Modal>
     </div>
@@ -303,3 +248,5 @@ function Registro() {
 }
 
 export default Registro;
+
+
