@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
-import Header from './Header';
-import Footer from './Footer';
+import backgroundImage from '../assets/J.jpg';
 
 Modal.setAppElement('#root');
 
@@ -13,101 +12,59 @@ function Login({ onLoginSuccess }) {
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleHomeClick = () => {
-    navigate('/home');
-  };
-
-  const handleRegisterClick = () => {
-    navigate('/registro');
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', { email, password });
     try {
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
+
       const result = await response.json();
-      console.log('Respuesta del servidor:', result);
       if (result.status === 'Bienvenido') {
         localStorage.setItem('user_id', result._id);
         localStorage.setItem('user', result.user);
         localStorage.setItem('role', result.role);
-        if (onLoginSuccess) {
-          onLoginSuccess();
-        }
-        if (result.role === 'client') {
-          navigate('/list');
-        } else {
-          navigate('/ganadores');
-        }
-        setModalMessage('Bienvenido');
-        setTimeout(() => {
-          closeModal();
-        }, 2000);
+        if (onLoginSuccess) onLoginSuccess();
+        navigate(result.role === 'client' ? '/list' : '/ganadores');
       } else {
         setModalMessage(result.message || 'No es bienvenido');
       }
     } catch (error) {
-      console.error('Error:', error);
       setModalMessage('Error en las credenciales');
     }
   };
 
-  const closeModal = () => {
-    setModalMessage('');
-  };
-
   return (
-    <div className="login-page">
-      <Header />
-      <div className="form-container">
-        <form onSubmit={handleSubmit} className="ai-agent-form">
-          <h2 className="form-title">Entrar</h2>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+    <div className="login-container">
+      <div className="login-image" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
+      <div className="login-form">
+        {/* Botón de volver */}
+        <button className="back-button" onClick={() => navigate('/')}>
+          <span className="back-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8.004" height="13.988" viewBox="0 0 8.004 13.988">
+              <path d="M281.016,113a1,1,0,0,1-.707-1.707l5.3-5.293-5.293-5.293a1,1,0,0,1,1.414-1.414l6,6a1,1,0,0,1,0,1.414l-6,6a1,1,0,0,1-.711.293"
+                transform="translate(288.02 113) rotate(180)" fill="#187385"></path>
+            </svg>
+          </span>
+          <span>Volver</span>
+        </button>
+        <img src="/src/assets/logo-login.png" alt="Logo" className="logo" />
+        <h2>Inicio de sesión</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label>Correo electrónico</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+          <div className="input-group">
+            <label>Contraseña</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" className="submit-button">Login</button>
-          <button type="button" className="submit-button" onClick={handleRegisterClick}>Registrar</button>
-          <button type="button" className="submit-button" onClick={handleHomeClick}>Home</button>
+          <button type="submit" className="login-button">Ingresar</button>
+          <a href="#" className="forgot-password">Olvidé la contraseña</a>
+          <button type="button" className="register-button" onClick={() => navigate('/registro')}>Registrarse</button>
         </form>
-        <Modal
-          isOpen={!!modalMessage}
-          onRequestClose={closeModal}
-          contentLabel="Message Modal"
-          className="modal"
-          overlayClassName="overlay"
-        >
-          <div className="modal-content">
-            <h2>Mensaje</h2>
-            <p>{modalMessage}</p>
-            <button onClick={closeModal} className="submit-button">Cerrar</button>
-          </div>
-        </Modal>
       </div>
     </div>
   );
