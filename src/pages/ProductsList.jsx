@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '../styles/ProductsList.css';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header';
 
 Modal.setAppElement('#root');
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
+  const [produc, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -138,7 +137,6 @@ const ProductsList = () => {
 
   return (
     <>
-      <Header />
       <section className="productos-lista">
         <h2>Categorías</h2>
         

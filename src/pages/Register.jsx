@@ -214,7 +214,9 @@ function Registro() {
             required
           />
         </div>
-
+        <button type="submit" className="submit-button">
+          Registrarse
+        </button>
         <div className="form-group">
           <label htmlFor="recaptcha">Verificación</label>
           <div
@@ -222,10 +224,6 @@ function Registro() {
             data-sitekey="6LdV0v4qAAAAAJQDgJRcnN1bWzpHvgqpXXEK9Q3B"
           ></div>
         </div>
-
-        <button type="submit" className="submit-button">
-          Registrarse
-        </button>
       </form>
 
       <Modal
