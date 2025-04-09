@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📌 Proyecto: Venta de Productos de Aseo
 
 ## 📖 Descripción
@@ -84,3 +85,13 @@ Este proyecto es una plataforma de e-commerce para la venta de productos de aseo
 - El método de pago debe garantizar **seguridad y confiabilidad**.
 - La aplicación debe ser **intuitiva y fácil de usar**.
 
+=======
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+>>>>>>> master

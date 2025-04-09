@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* styles/vista_ganadores.css */
 .vista-ganadores-container {
   padding: 20px;
@@ -9,4 +10,15 @@
 h2 {
   font-size: 2rem; /* Tamaño de título */
   margin-bottom: 15px; /* Margen abajo */
+=======
+@import '../common.css';
+
+/* styles/vista_ganadores.css */
+.vista-ganadores-container {
+  /* Removed redundant styles, now using common.css */
+}
+
+h2 {
+  /* Removed redundant styles, now using common.css */
+>>>>>>> master
 }

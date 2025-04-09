@@ -1,7 +1,41 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 .header-section {
   background-color: #1a1a1a; /* Fondo oscuro */
+=======
+@import '../common.css';
+
+/* Header styles */
+
+/* Search Input */
+.search-input {
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Search Button */
+.search-button {
+  background: #A5D6A7;
+  color: #332f2c;
+  padding: 10px 20px;
+  font-family: 'Bebas Neue';
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.search-button:hover {
+  background: #e0a800; /* Darker shade for hover effect */
+}
+.header-section {
+  background-color: #F5F5DC; /* Fondo oscuro */
+>>>>>>> master
   padding: 10px 30px;
   color: #FFC300; /* Color amarillo del texto */
   display: flex;
@@ -49,12 +83,20 @@
   align-items: center;
   gap: 8px;
   font-family: 'Bebas Neue', sans-serif;
+<<<<<<< HEAD
   font-size: 16px;
+=======
+  font-size: 20px;
+>>>>>>> master
   font-weight: bold;
   text-transform: uppercase;
   background: #f4f4f4;
   border: none;
+<<<<<<< HEAD
   color: #FFC300;
+=======
+  color: #332f2c;
+>>>>>>> master
   cursor: pointer;
   position: relative;
   padding: 10px 20px;
@@ -85,5 +127,8 @@
 .nav-link:hover::after {
   width: 100%;
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master

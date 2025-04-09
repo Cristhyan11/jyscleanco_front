@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body, html, #root {
     height: 100%;
     margin: 0;
@@ -37,3 +38,13 @@ button {
 }
 
 /* Continúa con los estilos específicos de cada componente, como Footer, Home, Products */
+=======
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #F5F5DC;
+}
+
+/* Add any other styles you want to apply here */
+>>>>>>> master

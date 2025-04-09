@@ -11,7 +11,11 @@ const Footer = () => {
       />
 
       <div className="footer-content">
+<<<<<<< HEAD
         <p>© 2024. All rights reserved.</p>
+=======
+        <p>J&L Clean Co.</p>
+>>>>>>> master
         <div className="social">
           <a href="https://wa.me/123456789" title="WhatsApp" target="_blank" rel="noopener noreferrer">
             <i className="fa fa-whatsapp"></i>
