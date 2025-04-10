@@ -14,15 +14,10 @@ const Header = () => {
           <img src={logo} alt="Logo J&L Clean Co" className="logo" />
         </div>
         
-<<<<<<< HEAD
-        {/* Menu */}
-        <nav className="nav-menu">
-=======
         {/* Menu and Search Bar */}
         <nav className="nav-menu">
           <input type="text" placeholder="Buscar..." className="search-input" />
           <button className="search-button" onClick={() => {/* Handle search action */}}>Buscar</button>
->>>>>>> master
           <button onClick={() => navigate('/')} className="nav-link"><i className="fa fa-home"></i>INICIO</button>
           <button onClick={() => navigate('/list')} className="nav-link"><i className="fa fa-list"></i>PRODUCTOS</button>
           <button onClick={() => navigate('/car')} className="nav-link"><i className="fa fa-shopping-cart"></i>CARRITO</button>

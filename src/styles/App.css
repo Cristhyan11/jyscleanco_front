@@ -1,44 +1,3 @@
-<<<<<<< HEAD
-body, html, #root {
-    height: 100%;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif; /* Asegúrate de tener esta fuente importada */
-    color: #333; /* Color de texto general */
-    background-color: #221e1e; /* Color de fondo general */
-}
-
-h1, h2, h3, h4 {
-    margin: 0;
-}
-
-/* Contenedor general */
-.container {
-    max-width: 1200px;
-    margin: 0 auto; /* Centra el contenido */
-    padding: 20px; /* Espaciado interno */
-}
-
-/* Otros estilos generales */
-a {
-    text-decoration: none;
-    color: inherit; /* Hereda el color del texto padre */
-}
-
-button {
-    font-family: inherit;
-    cursor: pointer;
-}
-
-/* Asegúrate de incluir las clases específicas de tus componentes */
-.header-section {
-    background-color: #221e1e; /* Fondo del encabezado */
-    padding: 20px 0; /* Espaciado superior e inferior */
-    color: #ffffff; /* Color del texto */
-    text-align: center; /* Centrar el texto */
-}
-
-/* Continúa con los estilos específicos de cada componente, como Footer, Home, Products */
-=======
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap');
 
 body {
@@ -47,4 +6,3 @@ body {
 }
 
 /* Add any other styles you want to apply here */
->>>>>>> master

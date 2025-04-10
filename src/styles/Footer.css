@@ -1,26 +1,15 @@
-<<<<<<< HEAD
-.footer {
-  background-color: #fce400; /* Fondo amarillo */
-=======
 @import '../common.css';
 
 /* Footer styles */
 .footer {
   background-color: #F5F5DC; /* Fondo amarillo */
->>>>>>> master
   padding: 20px 0; /* Espaciado superior e inferior */
   display: flex;
   justify-content: space-between; /* Espaciado entre texto e íconos */
   align-items: center;
-<<<<<<< HEAD
-  color: black; /* Color del texto */
-  font-family: 'Bebas Neue', sans-serif; /* Fuente genérica */
-  font-size: 14px; /* Tamaño del texto */
-=======
   color: #333; /* Color del texto */
   font-family: 'Bebas Neue', sans-serif; /* Fuente genérica */
   font-size: 30px; /* Tamaño del texto */
->>>>>>> master
 }
 
 .footer-content {
@@ -39,28 +28,16 @@
 
 .social {
   display: flex;
-<<<<<<< HEAD
-  gap: 15px; /* Espaciado entre los íconos */
-=======
   gap: 20px; /* Espaciado entre los íconos */
->>>>>>> master
 }
 
 .social a {
   color: black; /* Color inicial de los íconos */
-<<<<<<< HEAD
-  font-size: 15px; /* Tamaño de los íconos */
-=======
   font-size: 30px; /* Tamaño de los íconos */
->>>>>>> master
   transition: transform 0.2s ease, color 0.3s ease; /* Efecto al pasar el mouse */
 }
 
 .social a:hover {
   color: #e57300; /* Cambia a naranja en hover */
-<<<<<<< HEAD
-  transform: scale(1.2); /* Efecto de agrandar */
-=======
   transform: scale(1.8); /* Efecto de agrandar */
->>>>>>> master
 }

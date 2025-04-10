@@ -4,30 +4,6 @@
 }
 
 .productos h2 {
-<<<<<<< HEAD
-  font-size: 2rem;
-  font-family: 'Bebas Neue', sans-serif;
-  margin-bottom: 20px;
-  color: #FFC300; /* Cambia el color del título principal */
-}
-
-.productos-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.producto {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  max-width: 200px;
-  text-align: center;
-  transition: box-shadow 0.3s;
-}
-
-=======
   font-size: 2.5rem;
   font-family: 'Bebas Neue', sans-serif;
   margin-bottom: 20px;
@@ -50,7 +26,6 @@
 .slick-dots li button:before {
   color: #A5D6A7; /* Updated to match the new color scheme */
 }
->>>>>>> master
 .producto img {
   max-width: 100%;
   height: auto;
@@ -60,15 +35,9 @@
 
 .producto h3 {
   font-size: 1.2rem;
-<<<<<<< HEAD
-  font-family: 'Bebas Neue', sans-serif;
-  margin-bottom: 10px;
-  color: #FFC300; /* Cambia el color de los títulos de los productos */
-=======
   font-family: 'Lato', sans-serif;
   margin-bottom: 10px;
   color: #332f2c; /* Cambia el color de los títulos de los productos */
->>>>>>> master
 }
 
 .producto p {
@@ -79,8 +48,6 @@
 .producto:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-<<<<<<< HEAD
-=======
 
 .carousel-container {
   width: 40%;
@@ -93,4 +60,3 @@
   height: auto;
   border-radius: 10px;
 }
->>>>>>> master

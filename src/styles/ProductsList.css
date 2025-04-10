@@ -3,24 +3,15 @@
 .productos-lista {
   padding: 20px;
   text-align: center;
-<<<<<<< HEAD
-  color: #FFC300;
-  font-family: 'Bebas Neue', sans-serif;
-=======
   color: #4A4A4A; /* Updated to a lighter shade */
   font-family: 'Lato', sans-serif;
->>>>>>> master
 }
 
 .productos-lista h2 {
   font-size: 36px;
   text-align: center;
   margin-bottom: 20px;
-<<<<<<< HEAD
-  font-family: 'Bebas Neue', sans-serif;
-=======
   font-family: 'Lato', sans-serif;
->>>>>>> master
 }
 
 .productos-grid {
@@ -37,11 +28,7 @@
   max-width: 300px;
   text-align: center;
   transition: box-shadow 0.3s;
-<<<<<<< HEAD
-  font-family: 'Bebas Neue', sans-serif;
-=======
   font-family: 'Lato', sans-serif;
->>>>>>> master
 }
 
 .producto-imagen {
@@ -52,11 +39,7 @@
 }
 
 .producto-nombre {
-<<<<<<< HEAD
-  font-family: 'Bebas Neue', sans-serif;
-=======
   font-family: 'Lato', sans-serif;
->>>>>>> master
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -64,32 +47,20 @@
 }
 
 .producto-precio {
-<<<<<<< HEAD
-  font-family: 'Bebas Neue', sans-serif;
-=======
   font-family: 'Lato', sans-serif;
->>>>>>> master
   font-size: 16px;
   color: #666;
 }
 
 .producto-descripcion {
-<<<<<<< HEAD
-  font-family: 'Bebas Neue', sans-serif;
-=======
   font-family: 'Lato', sans-serif;
->>>>>>> master
   font-size: 20px;
   color: #333;
 }
 
 .add-to-cart-btn {
   font-family: 'Bebas Neue', sans-serif;
-<<<<<<< HEAD
-  background-color: #f5a623;
-=======
   background-color: #8BC34A; /* Updated to a more inviting color */
->>>>>>> master
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -101,11 +72,7 @@
 }
 
 .add-to-cart-btn:hover {
-<<<<<<< HEAD
-  background-color: #f39c12;
-=======
   background-color: #A5D6A7; /* Updated to a lighter shade of the new background color */
->>>>>>> master
 }
 
 .producto:hover {
